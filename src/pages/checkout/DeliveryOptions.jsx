@@ -1,7 +1,9 @@
+import { useCart } from "../../context/CartContext";
 import { formatMoney } from "../../utils/money";
 import { addDays } from "../../utils/addDays";
 
 export function DeliveryOptions({ cartItem, deliveryOptions }) {
+  const { updateDeliveryOption } = useCart();
   const today = new Date();
 
   return (
@@ -14,15 +16,11 @@ export function DeliveryOptions({ cartItem, deliveryOptions }) {
           priceString = `${formatMoney(deliveryOption.price)} - Shipping`;
         }
 
-        const updateDeliveryOption = () => {
-          cartItem.deliveryOptionId = deliveryOption.id;
-        };
-
         return (
           <div
             key={deliveryOption.id}
             className="delivery-option"
-            onClick={updateDeliveryOption}
+            onClick={() => updateDeliveryOption(cartItem.id, deliveryOption.id)}
           >
             <input
               type="radio"
