@@ -1,10 +1,29 @@
+import { useState, useEffect } from "react";
+import { useCart } from "../../context/CartContext";
 import { useNavigate } from "react-router";
 import { formatMoney } from "../../utils/money";
 
 export function PaymentSummary({ paymentSummary }) {
+  const { cart, clearCart } = useCart();
   const navigate = useNavigate();
+  const [orders, setOrders] = useState(() => {
+    const arr = localStorage.getItem("orders");
+    return arr ? JSON.parse(arr) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("orders", JSON.stringify(orders));
+    console.log("orders- ", orders);
+  }, [orders]);
 
   const createOrder = () => {
+    const orderId = crypto.randomUUID();
+    const date = new Date();
+    const total = paymentSummary.totalCostCents;
+    const newOrder = { orderId, date, total, cart };
+    setOrders((prev) => [...prev, newOrder]);
+
+    clearCart();
     navigate("/orders");
   };
 
