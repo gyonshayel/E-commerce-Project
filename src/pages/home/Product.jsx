@@ -61,7 +61,14 @@ export function Product({ product }) {
       <button
         className="add-to-cart-button button-primary"
         data-testid="add-to-cart-button"
-        onClick={() => addToCart({ id: product.id, quantity: quantity })}
+        onClick={() =>
+          addToCart({
+            id: product.id,
+            quantity: quantity,
+            product: product,
+            deliveryOptionId: 1,
+          })
+        }
       >
         Add to Cart
       </button>

@@ -1,42 +1,39 @@
-import dayjs from 'dayjs';
-import axios from 'axios';
-import { formatMoney } from '../../utils/money';
+import { formatMoney } from "../../utils/money";
+import { addDays } from "../../utils/addDays";
 
-export function DeliveryOptions({ cartItem, deliveryOptions, loadCart }) {
+export function DeliveryOptions({ cartItem, deliveryOptions }) {
   return (
     <div className="delivery-options">
-      <div className="delivery-options-title">
-        Choose a delivery option:
-      </div>
+      <div className="delivery-options-title">Choose a delivery option:</div>
       {deliveryOptions.map((deliveryOption) => {
-        let priceString = 'FREE Shipping';
+        let priceString = "FREE Shipping";
 
-        if (deliveryOption.priceCents > 0) {
-          priceString = `${formatMoney(deliveryOption.priceCents)} - Shipping`;
+        if (deliveryOption.price > 0) {
+          priceString = `${formatMoney(deliveryOption.price)} - Shipping`;
         }
 
-        const updateDeliveryOption = async () => {
-          await axios.put(`/api/cart-items/${cartItem.productId}`, {
-            deliveryOptionId: deliveryOption.id
-          });
-          await loadCart();
+        const updateDeliveryOption = () => {
+          cartItem.deliveryOptionId = deliveryOption.id;
         };
 
         return (
-          <div key={deliveryOption.id} className="delivery-option"
-            onClick={updateDeliveryOption}>
-            <input type="radio"
+          <div
+            key={deliveryOption.id}
+            className="delivery-option"
+            onClick={updateDeliveryOption}
+          >
+            <input
+              type="radio"
               checked={deliveryOption.id === cartItem.deliveryOptionId}
               onChange={() => {}}
               className="delivery-option-input"
-              name={`delivery-option-${cartItem.productId}`} />
+              name={`delivery-option-${cartItem.id}`}
+            />
             <div>
               <div className="delivery-option-date">
-                {dayjs(deliveryOption.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
+                {addDays(deliveryOption.deliveryDays)}
               </div>
-              <div className="delivery-option-price">
-                {priceString}
-              </div>
+              <div className="delivery-option-price">{priceString}</div>
             </div>
           </div>
         );

@@ -1,25 +1,52 @@
 import { useState, useEffect } from "react";
+import { useCart } from "../../context/CartContext";
 import { OrderSummary } from "./OrderSummary";
 import { PaymentSummary } from "./PaymentSummary";
 import "./checkout-header.css";
 import "./CheckoutPage.css";
 
-export function CheckoutPage({ cart, loadCart }) {
-  const [deliveryOptions, setDeliveryOptions] = useState([]);
-  const [paymentSummary, setPaymentSummary] = useState(null);
+const deliveryOptions = [
+  { id: 1, price: 0, deliveryDays: 7 },
+  { id: 2, price: 499, deliveryDays: 3 },
+  { id: 3, price: 999, deliveryDays: 1 },
+];
+
+export function CheckoutPage() {
+  const [paymentSummary, setPaymentSummary] = useState({});
+  const { cart } = useCart();
 
   useEffect(() => {
-    const fetchCheckoutData = async () => {
-      let response = await axios.get(
-        "/api/delivery-options?expand=estimatedDeliveryTime"
-      );
-      setDeliveryOptions(response.data);
+    const getPaymentSummary = () => {
+      let productCostCents = 0;
+      let totalItems = 0;
+      let shippingCostCents = 0;
 
-      response = await axios.get("/api/payment-summary");
-      setPaymentSummary(response.data);
+      cart.forEach((cartItem) => {
+        totalItems += cartItem.quantity;
+        productCostCents += Math.round(
+          cartItem.quantity * cartItem.product.price * 100
+        );
+
+        const deliveryOption = deliveryOptions.find(
+          (option) => option.id === cartItem.deliveryOptionId
+        );
+
+        shippingCostCents += deliveryOption.price;
+      });
+
+      const taxCents = Math.round(productCostCents * 0.1);
+      const totalCostCents = productCostCents + shippingCostCents + taxCents;
+
+      setPaymentSummary({
+        productCostCents,
+        shippingCostCents,
+        taxCents,
+        totalCostCents,
+        totalItems,
+      });
     };
 
-    fetchCheckoutData();
+    getPaymentSummary();
   }, [cart]);
 
   return (
@@ -38,7 +65,7 @@ export function CheckoutPage({ cart, loadCart }) {
           <div className="checkout-header-middle-section">
             Checkout (
             <a className="return-to-home-link" href="/">
-              3 items
+              {`${paymentSummary.totalItems} items`}
             </a>
             )
           </div>
@@ -53,13 +80,9 @@ export function CheckoutPage({ cart, loadCart }) {
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
-          <OrderSummary
-            cart={cart}
-            deliveryOptions={deliveryOptions}
-            loadCart={loadCart}
-          />
+          <OrderSummary deliveryOptions={deliveryOptions} />
 
-          <PaymentSummary paymentSummary={paymentSummary} loadCart={loadCart} />
+          <PaymentSummary paymentSummary={paymentSummary} />
         </div>
       </div>
     </>

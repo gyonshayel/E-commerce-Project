@@ -1,58 +1,66 @@
-import axios from 'axios';
-import dayjs from 'dayjs';
-import { formatMoney } from '../../utils/money';
-import { DeliveryOptions } from './DeliveryOptions';
+import { useCart } from "../../context/CartContext";
+import { DeliveryOptions } from "./DeliveryOptions";
+import { addDays } from "../../utils/addDays";
 
-export function OrderSummary({ cart, deliveryOptions, loadCart }) {
+export function OrderSummary({ deliveryOptions }) {
+  const { cart, removeFromCart } = useCart();
+
   return (
     <div className="order-summary">
-      {deliveryOptions.length > 0 && cart.map((cartItem) => {
-        const selectedDeliveryOption = deliveryOptions
-          .find((deliveryOption) => {
-            return deliveryOption.id === cartItem.deliveryOptionId;
-          });
+      {deliveryOptions.length > 0 &&
+        cart.map((cartItem) => {
+          const selectedDeliveryOption = deliveryOptions.find(
+            (deliveryOption) => {
+              return deliveryOption.id === cartItem.deliveryOptionId;
+            }
+          );
 
-        const deleteCartItem = async () => {
-          await axios.delete(`/api/cart-items/${cartItem.productId}`);
-          await loadCart();
-        };
+          const deleteCartItem = () => {
+            removeFromCart(cartItem.productId);
+          };
 
-        return (
-          <div key={cartItem.productId} className="cart-item-container">
-            <div className="delivery-date">
-              Delivery date: {dayjs(selectedDeliveryOption.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
-            </div>
-
-            <div className="cart-item-details-grid">
-              <img className="product-image"
-                src={cartItem.product.image} />
-
-              <div className="cart-item-details">
-                <div className="product-name">
-                  {cartItem.product.name}
-                </div>
-                <div className="product-price">
-                  {formatMoney(cartItem.product.priceCents)}
-                </div>
-                <div className="product-quantity">
-                  <span>
-                    Quantity: <span className="quantity-label">{cartItem.quantity}</span>
-                  </span>
-                  <span className="update-quantity-link link-primary">
-                    Update
-                  </span>
-                  <span className="delete-quantity-link link-primary"
-                    onClick={deleteCartItem}>
-                    Delete
-                  </span>
-                </div>
+          return (
+            <div key={cartItem.id} className="cart-item-container">
+              <div className="delivery-date">
+                Delivery date: {addDays(selectedDeliveryOption.deliveryDays)}
               </div>
 
-              <DeliveryOptions cartItem={cartItem} deliveryOptions={deliveryOptions} loadCart={loadCart} />
+              <div className="cart-item-details-grid">
+                <img
+                  className="product-image"
+                  src={cartItem.product.thumbnail}
+                />
+
+                <div className="cart-item-details">
+                  <div className="product-name">{cartItem.product.title}</div>
+                  <div className="product-price">{cartItem.product.price}</div>
+                  <div className="product-quantity">
+                    <span>
+                      Quantity:{" "}
+                      <span className="quantity-label">
+                        {cartItem.quantity}
+                      </span>
+                    </span>
+                    <span className="update-quantity-link link-primary">
+                      Update
+                    </span>
+                    <span
+                      className="delete-quantity-link link-primary"
+                      onClick={deleteCartItem}
+                    >
+                      Delete
+                    </span>
+                  </div>
+                </div>
+
+                <DeliveryOptions
+                  cartItem={cartItem}
+                  deliveryOptions={deliveryOptions}
+                />
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 }
