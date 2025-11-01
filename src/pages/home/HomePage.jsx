@@ -4,7 +4,7 @@ import "./HomePage.css";
 
 export function HomePage() {
   const [products, setProducts] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
+  const [total, setTotal] = useState(0);
   const [skip, setSkip] = useState(0);
   const limit = 30;
 
@@ -18,18 +18,47 @@ export function HomePage() {
           throw new Error("Failed to get Product details from the server");
 
         const data = await response.json();
-        setHasMore(skip + limit < data.total);
         setProducts(data.products);
+        setTotal(data.total);
       } catch (error) {
         console.log(error.message);
       }
     };
 
     getHomeData(skip);
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [skip]);
 
-  const handlePaginationUp = () => setSkip((prev) => prev + 30);
-  const handlePaginationDown = () => setSkip((prev) => prev - 30);
+  const totalPages = Math.ceil(total / limit);
+  const currentPage = skip / limit + 1;
+
+  const goToPage = (pageNumber) => {
+    setSkip((pageNumber - 1) * limit);
+  };
+
+  const generatePagination = () => {
+    const pages = [];
+
+    if (totalPages > 1) pages.push(1); // Always show first page
+
+    if (currentPage > 3) pages.push("...");
+
+    // Show pages around current page
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
+      pages.push(i);
+    }
+
+    if (currentPage < totalPages - 2) pages.push("...");
+
+    if (totalPages > 1) pages.push(totalPages); // Always show last page
+
+    return pages;
+  };
 
   return (
     <>
@@ -40,11 +69,31 @@ export function HomePage() {
       </div>
 
       <div>
-        <button onClick={handlePaginationDown} disabled={skip === 0}>
-          Previous Page
+        {/* Previous button */}
+        <button
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Prev
         </button>
-        <button onClick={handlePaginationUp} disabled={!hasMore}>
-          Next Page
+
+        {/* Page buttons */}
+        {generatePagination().map((page, index) =>
+          page === "..." ? (
+            <span key={`ellipsis-${index}`}>...</span>
+          ) : (
+            <button key={`page-${page}`} onClick={() => goToPage(page)}>
+              {page}
+            </button>
+          )
+        )}
+
+        {/* Next button */}
+        <button
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
         </button>
       </div>
     </>
