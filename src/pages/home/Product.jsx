@@ -3,7 +3,6 @@ import { useCart } from "../../context/CartContext";
 
 export function Product({ product }) {
   const [quantity, setQuantity] = useState(1);
-
   const { addToCart } = useCart();
 
   const selectQuantity = (event) => {

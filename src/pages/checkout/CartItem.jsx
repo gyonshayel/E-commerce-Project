@@ -14,6 +14,10 @@ export function CartItem({ cartItem, deliveryOptions }) {
   );
 
   const handleSave = () => {
+    if (quantity < 1) {
+      alert("Quantity must be a valid value");
+      return;
+    }
     updateQuantity(cartItem.id, quantity);
     setIsUpdating(false);
   };

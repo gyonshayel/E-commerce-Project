@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { useNavigate } from "react-router";
+import { useCart } from "../../context/CartContext";
 import { formatMoney } from "../../utils/money";
 import { addDays } from "../../utils/addDays";
 import "./OrdersPage.css";
@@ -8,6 +9,7 @@ export function OrdersPage({ deliveryOptions }) {
   const arr = localStorage.getItem("orders");
   const orders = arr ? JSON.parse(arr) : [];
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   const handleTracking = (orderId, productId) => {
     const params = new URLSearchParams({
@@ -83,7 +85,17 @@ export function OrdersPage({ deliveryOptions }) {
                               className="buy-again-icon"
                               src="images/icons/buy-again.png"
                             />
-                            <span className="buy-again-message">
+                            <span
+                              className="buy-again-message"
+                              onClick={() =>
+                                addToCart({
+                                  id: orderProduct.id,
+                                  quantity: orderProduct.quantity,
+                                  product: orderProduct.product,
+                                  deliveryOptionId: 1,
+                                })
+                              }
+                            >
                               Order Again
                             </span>
                           </button>
