@@ -1,14 +1,25 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { useCart } from "../context/CartContext";
 import "./header.css";
 
 export function Header() {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   const { cart } = useCart();
   let totalQuantity = 0;
 
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
   });
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    if (query.trim()) {
+      navigate(`/search/${encodeURIComponent(query)}`);
+    }
+  };
 
   return (
     <>
@@ -28,10 +39,12 @@ export function Header() {
             id="search-bar"
             className="search-bar"
             type="text"
-            placeholder="Search"
+            placeholder="Search for products"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
 
-          <button className="search-button">
+          <button className="search-button" onClick={handleSearch}>
             <img
               className="search-icon"
               src="../public/images/icons/search-icon.png"

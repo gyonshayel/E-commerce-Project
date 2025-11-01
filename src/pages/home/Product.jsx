@@ -47,7 +47,9 @@ export function Product({ product }) {
         <img
           className="product-rating-stars"
           data-testid="product-rating-stars-image"
-          src={`images/ratings/rating-${Math.round(product.rating) * 10}.png`}
+          src={`../../public/images/ratings/rating-${
+            Math.round(product.rating) * 10
+          }.png`}
         />
         <div className="product-rating-count link-primary">
           {product.reviews.length}
