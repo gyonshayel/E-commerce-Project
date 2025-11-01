@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router";
 import { Header } from "../src/components/Header";
 import { HomePage } from "./pages/home/HomePage";
+import { ProductDetailsPage } from "./pages/details/ProductDetailsPage";
 import { CheckoutPage } from "./pages/checkout/CheckoutPage";
 import { OrdersPage } from "./pages/orders/OrdersPage";
 import { TrackingPage } from "./pages/tracking/TrackingPage";
@@ -18,6 +19,7 @@ function App() {
       <Header />
       <Routes>
         <Route index element={<HomePage />} />
+        <Route path="/product/:id/details" element={<ProductDetailsPage />} />
         <Route
           path="checkout"
           element={<CheckoutPage deliveryOptions={deliveryOptions} />}

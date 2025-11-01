@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import { useCart } from "../../context/CartContext";
 
 export function Product({ product }) {
   const [quantity, setQuantity] = useState(1);
+  const [isAdded, setIsAdded] = useState(false);
   const { addToCart } = useCart();
 
   const selectQuantity = (event) => {
@@ -10,17 +12,36 @@ export function Product({ product }) {
     setQuantity(quantitySelected);
   };
 
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      quantity: quantity,
+      product: product,
+      deliveryOptionId: 1,
+    });
+
+    setIsAdded(true);
+
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 3000);
+  };
+
   return (
     <div className="product-container" data-testid="product-container">
-      <div className="product-image-container">
-        <img
-          className="product-image"
-          data-testid="product-image"
-          src={product.thumbnail}
-        />
-      </div>
+      <Link to={`/product/${product.id}/details`}>
+        <div className="product-image-container">
+          <img
+            className="product-image"
+            data-testid="product-image"
+            src={product.thumbnail}
+          />
+        </div>
 
-      <div className="product-name limit-text-to-2-lines">{product.title}</div>
+        <div className="product-name limit-text-to-2-lines">
+          {product.title}
+        </div>
+      </Link>
 
       <div className="product-rating-container">
         <img
@@ -56,22 +77,17 @@ export function Product({ product }) {
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart">
-        <img src="images/icons/checkmark.png" />
-        Added
-      </div>
+      {isAdded && (
+        <div className="added-to-cart">
+          <img src="../public/images/icons/checkmark.png" />
+          Added
+        </div>
+      )}
 
       <button
         className="add-to-cart-button button-primary"
         data-testid="add-to-cart-button"
-        onClick={() =>
-          addToCart({
-            id: product.id,
-            quantity: quantity,
-            product: product,
-            deliveryOptionId: 1,
-          })
-        }
+        onClick={handleAddToCart}
       >
         Add to Cart
       </button>
