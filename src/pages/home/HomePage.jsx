@@ -70,11 +70,12 @@ export function HomePage() {
         <ProductsGrid products={products} />
       </div>
 
-      <div>
+      <div className="flex items-center justify-center gap-2 my-6 mx-0.5">
         {/* Previous button */}
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
+          className="px-2 py-1 text-sm rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
           Prev
         </button>
@@ -82,9 +83,19 @@ export function HomePage() {
         {/* Page buttons */}
         {generatePagination().map((page, index) =>
           page === "..." ? (
-            <span key={`ellipsis-${index}`}>...</span>
+            <span key={`ellipsis-${index}`} className="px-2 text-gray-400">
+              ...
+            </span>
           ) : (
-            <button key={`page-${page}`} onClick={() => goToPage(page)}>
+            <button
+              key={`page-${page}`}
+              onClick={() => goToPage(page)}
+              className={`px-2 py-1 text-sm rounded-md border transition ${
+                page === currentPage
+                  ? "bg-gray-900 text-white border-gray-900"
+                  : "border-gray-300 text-gray-700 hover:bg-gray-100"
+              }`}
+            >
               {page}
             </button>
           )
@@ -94,6 +105,7 @@ export function HomePage() {
         <button
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
+          className="px-2 py-1 text-sm rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
           Next
         </button>
