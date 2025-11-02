@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useCart } from "../../context/CartContext";
-import "./ProductDetailsPage.css";
 
 export function ProductDetailsPage() {
   const [productDetails, setProductDetails] = useState({});
@@ -35,45 +34,75 @@ export function ProductDetailsPage() {
 
   return (
     <>
-      <div className="product-details-page">
-        <div className="product-container">
-          <div className="product-images">
+      <div className="mt-[60px] px-6 md:px-12 lg:px-20 py-10 bg-white text-gray-800">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <div className="flex flex-col items-center w-full lg:w-1/2">
             <img
-              className="main-image"
+              className="w-full max-w-[400px] rounded-lg shadow-md mb-4 object-contain"
               src={productDetails.thumbnail}
-              alt="Essence Mascara Lash Princess"
+              alt={productDetails.title}
             />
-            <div className="thumbnail-list">
+            <div className="flex gap-3 flex-wrap justify-center">
               {productDetails.images?.map((image, index) => (
-                <img key={index} src={image} alt={`Image ${index + 1}`} />
+                <img
+                  className="w-[70px] h-[70px] object-cover rounded-md border border-gray-200 hover:border-yellow-400 cursor-pointer transition-all duration-200"
+                  key={index}
+                  src={image}
+                  alt={`Image ${index + 1}`}
+                />
               ))}
             </div>
           </div>
 
-          <div className="product-info">
-            <h1 className="product-title">{productDetails.title}</h1>
-            <p className="product-category">
-              Category: <strong>{productDetails.category}</strong>
-            </p>
-            <p className="product-brand">
-              Brand: <strong>{productDetails.brand}</strong>
-            </p>
-            <div className="product-rating">
-              ⭐ <strong>{productDetails.rating}</strong> / 5
-            </div>
+          <div className=" flex-1">
+            <h1 className="text-2xl md:text-3xl font-semibold mb-3">
+              {productDetails.title}
+            </h1>
 
-            <p className="product-description">{productDetails.description}</p>
-
-            <div className="product-pricing">
-              <p className="price">
-                <strong>{`$ ${productDetails.price}`}</strong>
+            <div className="text-sm text-gray-500 mb-4 space-y-1">
+              <p className="product-category">
+                Category:{" "}
+                <strong className="text-gray-700">
+                  {productDetails.category}
+                </strong>
               </p>
-              <p className="availability">
-                <strong>Stock:</strong> {productDetails.stock}
+              <p className="product-brand">
+                Brand:{" "}
+                <strong className="text-gray-700">
+                  {productDetails.brand}
+                </strong>
               </p>
             </div>
 
-            <div className="product-meta">
+            <div className="flex items-center mb-3">
+              <span className="text-yellow-500 text-lg">⭐</span>
+              <strong className="ml-1 text-gray-700">
+                {productDetails.rating}
+              </strong>
+              <span className="text-sm text-gray-500 ml-1">/ 5</span>
+            </div>
+
+            <p className="text-base text-gray-700 mb-4 leading-relaxed">
+              {productDetails.description}
+            </p>
+
+            <div className="mb-5 space-y-1">
+              <p className="text-3xl font-bold text-green-700">
+                {`$ ${productDetails.price}`}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Stock:</strong>{" "}
+                <span
+                  className={`${
+                    productDetails.stock > 0 ? "text-green-600" : "text-red-600"
+                  } font-medium`}
+                >
+                  {productDetails.stock > 0 ? "In Stock" : "Out of Stock"}
+                </span>
+              </p>
+            </div>
+
+            <div className="text-sm text-gray-600 mb-5 space-y-1">
               <p>
                 <strong>Warranty:</strong> {productDetails.warrantyInformation}
               </p>
@@ -82,9 +111,10 @@ export function ProductDetailsPage() {
               </p>
             </div>
 
-            <div className="product-actions">
-              <div className="product-quantity-container">
+            <div className="flex flex-col sm:flex-row gap-3 mt-5">
+              <div>
                 <select
+                  className="w-28 border border-gray-300 rounded-md px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
                   value={quantity}
                   name="product-quantity"
                   onChange={selectQuantity}
@@ -102,7 +132,7 @@ export function ProductDetailsPage() {
                 </select>
               </div>
               <button
-                className="add-to-cart-btn"
+                className="flex-1 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-gray-900 font-semibold py-2 rounded-md shadow-md transition-all duration-200"
                 onClick={() =>
                   addToCart({
                     id: productDetails.id,
@@ -115,7 +145,7 @@ export function ProductDetailsPage() {
                 Add to Cart
               </button>
               <button
-                className="buy-now-btn"
+                className="flex-1 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-semibold py-2 rounded-md shadow-md transition-all duration-200"
                 onClick={() => {
                   addToCart({
                     id: productDetails.id,
@@ -132,9 +162,11 @@ export function ProductDetailsPage() {
           </div>
         </div>
 
-        <section className="product-extra">
-          <h2>Product Details</h2>
-          <ul>
+        <section className="mt-14 border-t pt-8">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">
+            Product Details
+          </h2>
+          <ul className="space-y-1 text-sm text-gray-600">
             <li>
               <strong>SKU:</strong> {productDetails.sku}
             </li>
@@ -145,19 +177,26 @@ export function ProductDetailsPage() {
           </ul>
         </section>
 
-        <section className="product-reviews">
-          <h2>Customer Reviews</h2>
+        <section className="mt-14 border-t pt-8">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">
+            Customer Reviews
+          </h2>
 
           {productDetails.reviews?.length > 0 ? (
             productDetails.reviews.map((review, index) => (
-              <div key={index} className="review">
-                <p className="reviewer">{review.reviewerName}</p>
-                <p className="rating">⭐ {review.rating}</p>
-                <p className="comment">{review.comment}</p>
+              <div
+                key={index}
+                className="border-b pb-4 mb-4 last:border-none last:mb-0"
+              >
+                <p className="font-semibold text-gray-800">
+                  {review.reviewerName}
+                </p>
+                <p className="text-yellow-500">⭐ {review.rating}</p>
+                <p className="text-gray-700 text-sm mt-1">{review.comment}</p>
               </div>
             ))
           ) : (
-            <p>No reviews yet.</p>
+            <p className="text-gray-500">No reviews yet.</p>
           )}
         </section>
       </div>

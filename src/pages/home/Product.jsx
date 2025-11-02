@@ -28,37 +28,44 @@ export function Product({ product }) {
   };
 
   return (
-    <div className="product-container" data-testid="product-container">
+    <div
+      className="flex flex-col 
+        pt-10 pb-[25px] px-[25px] 
+        border-r border-b border-[rgb(231,231,231)]"
+      data-testid="product-container"
+    >
       <Link to={`/product/${product.id}/details`}>
-        <div className="product-image-container">
+        <div className="flex justify-center items-center h-[180px] mb-5">
           <img
-            className="product-image"
+            className="max-w-full max-h-full"
             data-testid="product-image"
             src={product.thumbnail}
+            alt={product.title}
           />
         </div>
 
-        <div className="product-name limit-text-to-2-lines">
+        <div className="h-10 mb-[5px] line-clamp-2 limit-text-to-2-lines">
           {product.title}
         </div>
       </Link>
 
-      <div className="product-rating-container">
+      <div className="flex items-center mb-2.5">
         <img
-          className="product-rating-stars"
+          className="w-[100px] mr-1.5"
           data-testid="product-rating-stars-image"
           src={`../../public/images/ratings/rating-${
             Math.round(product.rating) * 10
           }.png`}
+          alt="rating"
         />
-        <div className="product-rating-count link-primary">
+        <div className="text-[rgb(1,124,182)] cursor-pointer mt-[3px] link-primary">
           {product.reviews.length}
         </div>
       </div>
 
-      <div className="product-price">$ {product.price}</div>
+      <div className="font-bold mb-2.5">$ {product.price}</div>
 
-      <div className="product-quantity-container">
+      <div className="mb-[17px]">
         <select
           value={quantity}
           name="product-quantity"
@@ -77,17 +84,23 @@ export function Product({ product }) {
         </select>
       </div>
 
-      <div className="product-spacer"></div>
+      <div className="flex-1"></div>
 
       {isAdded && (
-        <div className="added-to-cart">
-          <img src="../public/images/icons/checkmark.png" />
+        <div className="flex items-center mb-2 text-[rgb(6,125,98)] text-[16px] opacity-100">
+          <img
+            className="h-5 mr-[5px]"
+            src="../public/images/icons/checkmark.png"
+            alt="Added"
+          />
           Added
         </div>
       )}
 
       <button
-        className="add-to-cart-button button-primary"
+        className="w-full py-2 rounded-[50px] bg-[rgb(255,216,20)] border border-[rgb(252,210,0)]
+                   hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)]
+                   active:shadow-none button-primary"
         data-testid="add-to-cart-button"
         onClick={handleAddToCart}
       >

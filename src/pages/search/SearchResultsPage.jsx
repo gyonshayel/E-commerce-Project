@@ -35,7 +35,7 @@ export function SearchResultsPage() {
       ) : (
         <>
           <title>E-Commerce Store</title>
-          <div className="home-page">
+          <div className="mt-[60px]">
             <ProductsGrid products={results} />
           </div>
         </>

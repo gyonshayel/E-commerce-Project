@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { useCart } from "../../context/CartContext";
 import { formatMoney } from "../../utils/money";
 import { addDays, formatDate } from "../../utils/addDays";
-import "./OrdersPage.css";
 
 export function OrdersPage({ deliveryOptions }) {
   const arr = localStorage.getItem("orders");
@@ -23,17 +22,19 @@ export function OrdersPage({ deliveryOptions }) {
     <>
       <title>Orders</title>
 
-      <div className="orders-page">
-        <div className="page-title">Your Orders</div>
+      <div className="max-w-[850px] mt-[90px] mb-[100px] px-5 mx-auto">
+        <h1 className="font-bold text-[26px] mb-[25px]">Your Orders</h1>
 
-        <div className="orders-grid">
+        <div className="grid grid-cols-1 gap-y-[50px]">
           {orders.map((order) => {
             return (
               <div key={order.orderId} className="order-container">
-                <div className="order-header">
-                  <div className="order-header-left-section">
-                    <div className="order-date">
-                      <div className="order-header-label">Order Placed:</div>
+                <div className="bg-[rgb(240,242,242)] border border-[#D5D9D9] flex items-center justify-between p-[20px_25px] rounded-t-lg max-[575px]:flex-col max-[575px]:items-start max-[575px]:leading-[23px] max-[575px]:p-[15px]">
+                  <div className="flex shrink-0 max-[575px]:flex-col">
+                    <div className="mr-[45px] max-[575px]:grid max-[575px]:grid-cols-[auto_1fr]">
+                      <div className="font-medium mr-[45px] max-[575px]:mr-[5px]">
+                        Order Placed:
+                      </div>
                       <div>
                         {new Date(order.date).toLocaleDateString("en-US", {
                           weekday: "long",
@@ -42,31 +43,35 @@ export function OrdersPage({ deliveryOptions }) {
                         })}
                       </div>
                     </div>
-                    <div className="order-total">
+                    <div className="mr-[45px] max-[575px]:grid max-[575px]:grid-cols-[auto_1fr]">
                       <div className="order-header-label">Total:</div>
                       <div>{formatMoney(order.totalCostCents)}</div>
                     </div>
                   </div>
 
-                  <div className="order-header-right-section">
-                    <div className="order-header-label">Order ID:</div>
+                  <div className="shrink max-[575px]:grid max-[575px]:grid-cols-[auto_1fr]">
+                    <div className="text-[15px]">Order ID:</div>
                     <div>{order.orderId}</div>
                   </div>
                 </div>
 
-                <div className="order-details-grid">
+                <div className="border border-[#D5D9D9] border-t-0 rounded-b-lg p-[40px_25px] grid grid-cols-[110px_1fr_220px] gap-x-[35px] gap-y-[60px] items-center max-[800px]:grid-cols-[110px_1fr] max-[800px]:gap-y-0 max-[800px]:pb-2max-[450px]:grid-cols-1">
                   {order.products.map((orderProduct) => {
                     return (
                       <Fragment key={orderProduct.id}>
-                        <div className="product-image-container">
-                          <img src={orderProduct.product.thumbnail} />
+                        <div className="text-center max-[450px]:mb-[25px]">
+                          <img
+                            className="max-w-[110px] max-h-[110px] max-[450px]:max-w-[150px] max-[450px]:max-h-[150px]"
+                            src={orderProduct.product.thumbnail}
+                            alt={orderProduct.product.title}
+                          />
                         </div>
 
-                        <div className="product-details">
-                          <div className="product-name">
+                        <div>
+                          <div className="font-bold mb-[5px] max-[450px]:mb-2.5">
                             {orderProduct.product.title}
                           </div>
-                          <div className="product-delivery-date">
+                          <div className="mb-[3px] max-[450px]:mb-[3px]">
                             Arriving on:{" "}
                             {formatDate(
                               addDays(
@@ -79,16 +84,16 @@ export function OrdersPage({ deliveryOptions }) {
                               )
                             )}
                           </div>
-                          <div className="product-quantity">
+                          <div className="mb-2max-[450px]:mb-[15px]">
                             Quantity: {orderProduct.quantity}
                           </div>
-                          <button className="buy-again-button button-primary">
+                          <button className="flex items-center justify-center text-[15px] w-[140px] h-9 rounded-lg max-[800px]:mb-2.5 max-[450px]:w-full max-[450px]:mb-[15px] button-primary">
                             <img
-                              className="buy-again-icon"
+                              className="w-[25px] mr-[15px]"
                               src="images/icons/buy-again.png"
+                              alt="buy-again-icon"
                             />
                             <span
-                              className="buy-again-message"
                               onClick={() =>
                                 addToCart({
                                   id: orderProduct.id,
@@ -103,12 +108,12 @@ export function OrdersPage({ deliveryOptions }) {
                           </button>
                         </div>
 
-                        <div className="product-actions">
+                        <div className="self-start max-[800px]:col-start-2 max-[800px]:mb-[30px] max-[450px]:col-auto max-[450px]:mb-[70px]">
                           <button
                             onClick={() =>
                               handleTracking(order.orderId, orderProduct.id)
                             }
-                            className="track-package-button button-secondary"
+                            className="w-full text-[15px] p-2 max-[450px]:p-3 max-[800px]:w-[140px] button-secondary"
                           >
                             Track package
                           </button>

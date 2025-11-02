@@ -23,19 +23,28 @@ export function CartItem({ cartItem, deliveryOptions }) {
   };
 
   return (
-    <div key={cartItem.id} className="cart-item-container">
-      <div className="delivery-date">
+    <div
+      key={cartItem.id}
+      className="border border-[#DEDEDE] rounded-sm p-[18px] mb-3"
+    >
+      <div className="text-[19px] font-bold text-[rgb(0,118,0)] mt-[5px] mb-[22px]">
         Delivery date:{" "}
         {formatDate(addDays(today, selectedDeliveryOption.deliveryDays))}
       </div>
 
-      <div className="cart-item-details-grid">
-        <img className="product-image" src={cartItem.product.thumbnail} />
+      <div className="grid grid-cols-[100px_1fr_1fr] gap-x-[25px] max-[1000px]:grid-cols-[100px_1fr] max-[1000px]:gap-y-[30px]">
+        <img
+          className="max-w-full max-h-[120px] mx-auto"
+          src={cartItem.product.thumbnail}
+          alt={cartItem.product.title}
+        />
 
         <div className="cart-item-details">
-          <div className="product-name">{cartItem.product.title}</div>
-          <div className="product-price">${cartItem.product.price}</div>
-          <div className="product-quantity">
+          <div className="font-bold mb-2">{cartItem.product.title}</div>
+          <div className="text-[rgb(177,39,4)] font-bold mb-[5px]">
+            ${cartItem.product.price}
+          </div>
+          <div className="text-[15px]">
             <span>
               Quantity:{" "}
               {isUpdating ? (
@@ -49,7 +58,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
                     }
                   />
                   <span
-                    className="update-quantity-link link-primary"
+                    className="text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] ml-[3px] cursor-pointer link-primary"
                     onClick={handleSave}
                   >
                     Save
@@ -59,7 +68,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
                 <span>
                   <span className="quantity-label">{cartItem.quantity}</span>
                   <span
-                    className="update-quantity-link link-primary"
+                    className="text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] ml-[3px] cursor-pointer link-primary"
                     onClick={() => setIsUpdating(true)}
                   >
                     Update
@@ -68,7 +77,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
               )}
             </span>
             <span
-              className="delete-quantity-link link-primary"
+              className="text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] ml-[3px] cursor-pointer link-primary"
               onClick={() => removeFromCart(cartItem.id)}
             >
               Delete

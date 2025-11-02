@@ -17,7 +17,7 @@ export function OrderSummary({ deliveryOptions }) {
   }
 
   return (
-    <div className="order-summary">
+    <div className="main max-[1000px]:max-w-[500px]">
       {deliveryOptions.length > 0 &&
         cart.map((cartItem) => (
           <CartItem

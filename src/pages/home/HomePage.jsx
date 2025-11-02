@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ProductsGrid } from "./ProductsGrid";
-import "./HomePage.css";
 
 export function HomePage() {
   const [products, setProducts] = useState([]);
@@ -64,7 +63,7 @@ export function HomePage() {
     <>
       <title>E-Commerce Store</title>
 
-      <div className="home-page">
+      <div className="mt-[60px]">
         <ProductsGrid products={products} />
       </div>
 

@@ -27,28 +27,28 @@ export function PaymentSummary({ paymentSummary }) {
   };
 
   return (
-    <div className="payment-summary">
-      <div className="payment-summary-title">Payment Summary</div>
+    <div className="border border-[#DEDEDE] rounded-sm p-[18px] pb-[5px] max-[1000px]:row-start-1 max-[1000px]:mb-3">
+      <h2 className="font-bold text-[18px] mb-3">Payment Summary</h2>
 
       {paymentSummary && (
         <>
-          <div className="payment-summary-row">
+          <div className="grid grid-cols-[1fr_auto] text-[15px] mb-[9px]">
             <div>Items ({paymentSummary.totalItems}):</div>
-            <div className="payment-summary-money">
+            <div className="text-right">
               {formatMoney(paymentSummary.productCostCents)}
             </div>
           </div>
 
-          <div className="payment-summary-row">
+          <div className="grid grid-cols-[1fr_auto] text-[15px] mb-[9px]">
             <div>Shipping &amp; handling:</div>
-            <div className="payment-summary-money">
+            <div className="text-right">
               {formatMoney(paymentSummary.shippingCostCents)}
             </div>
           </div>
 
-          <div className="payment-summary-row subtotal-row">
+          <div className="grid grid-cols-[1fr_auto] text-[15px] mb-[9px] border-t border-[#DEDEDE] pt-[9px]">
             <div>Total before tax:</div>
-            <div className="payment-summary-money">
+            <div className="text-right">
               {formatMoney(
                 paymentSummary.productCostCents +
                   paymentSummary.shippingCostCents
@@ -56,22 +56,24 @@ export function PaymentSummary({ paymentSummary }) {
             </div>
           </div>
 
-          <div className="payment-summary-row">
+          <div className="grid grid-cols-[1fr_auto] text-[15px] mb-[9px]">
             <div>Estimated tax (10%):</div>
-            <div className="payment-summary-money">
+            <div className="text-right">
               {formatMoney(paymentSummary.taxCents)}
             </div>
           </div>
 
-          <div className="payment-summary-row total-row">
-            <div>Order total:</div>
-            <div className="payment-summary-money">
-              {formatMoney(paymentSummary.totalCostCents)}
+          <div className="text-[rgb(177,39,4)] font-bold text-[18px] border-t border-[#DEDEDE] pt-[18px]">
+            <div className="grid grid-cols-[1fr_auto]">
+              <div>Order total:</div>
+              <div className="text-right">
+                {formatMoney(paymentSummary.totalCostCents)}
+              </div>
             </div>
           </div>
 
           <button
-            className="place-order-button button-primary"
+            className="w-full py-3 rounded-lg mt-[11px] mb-[15px] bg-[rgb(255,216,20)] border border-[rgb(252,210,0)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[rgb(247,202,0)] active:shadow-none active:bg-[rgb(255,216,20)] button-primary"
             onClick={createOrder}
             disabled={cart.length === 0}
           >

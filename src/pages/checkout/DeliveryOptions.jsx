@@ -7,8 +7,8 @@ export function DeliveryOptions({ cartItem, deliveryOptions }) {
   const today = new Date();
 
   return (
-    <div className="delivery-options">
-      <div className="delivery-options-title">Choose a delivery option:</div>
+    <div className="max-[1000px]:col-span-2">
+      <div className="font-bold mb-2.5">Choose a delivery option:</div>
       {deliveryOptions.map((deliveryOption) => {
         let priceString = "FREE Shipping";
 
@@ -19,21 +19,23 @@ export function DeliveryOptions({ cartItem, deliveryOptions }) {
         return (
           <div
             key={deliveryOption.id}
-            className="delivery-option"
+            className="grid grid-cols-[24px_1fr] mb-3 cursor-pointer"
             onClick={() => updateDeliveryOption(cartItem.id, deliveryOption.id)}
           >
             <input
               type="radio"
               checked={deliveryOption.id === cartItem.deliveryOptionId}
               onChange={() => {}}
-              className="delivery-option-input"
+              className="ml-0 cursor-pointer"
               name={`delivery-option-${cartItem.id}`}
             />
             <div>
-              <div className="delivery-option-date">
+              <div className="text-[rgb(0,118,0)] font-medium mb-[3px]">
                 {formatDate(addDays(today, deliveryOption.deliveryDays))}
               </div>
-              <div className="delivery-option-price">{priceString}</div>
+              <div className="text-[15px] text-[rgb(120,120,120)]">
+                {priceString}
+              </div>
             </div>
           </div>
         );
