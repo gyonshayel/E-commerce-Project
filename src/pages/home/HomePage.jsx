@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { ProductsGrid } from "./ProductsGrid";
+import { ProductsSkeleton } from "./ProductsSkeleton";
 
 export function HomePage() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [skip, setSkip] = useState(0);
+  const [loading, setLoading] = useState(true);
   const limit = 30;
 
   useEffect(() => {
     const getHomeData = async (skipNumber) => {
       try {
+        setLoading(true);
+
         const response = await fetch(
           `https://dummyjson.com/products?limit=${limit}&skip=${skipNumber}`
         );
@@ -22,6 +26,8 @@ export function HomePage() {
         setTotal(data.total);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -66,9 +72,13 @@ export function HomePage() {
 
       <Header />
 
-      <div className="mt-[60px]">
-        <ProductsGrid products={products} />
-      </div>
+      {loading ? (
+        <ProductsSkeleton />
+      ) : (
+        <div className="mt-[60px]">
+          <ProductsGrid products={products} loading={loading} />
+        </div>
+      )}
 
       <div className="flex items-center justify-center gap-2 my-6 mx-0.5">
         {/* Previous button */}
