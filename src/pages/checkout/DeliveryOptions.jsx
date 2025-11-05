@@ -31,12 +31,10 @@ export function DeliveryOptions({ cartItem, deliveryOptions }) {
               name={`delivery-option-${cartItem.id}`}
             />
             <div>
-              <div className="text-[rgb(0,118,0)] font-bold mb-[3px]">
+              <div className="text-[#007600] font-bold mb-[3px]">
                 {formatDate(addDays(today, deliveryOption.deliveryDays))}
               </div>
-              <div className="text-[15px] text-[rgb(120,120,120)]">
-                {priceString}
-              </div>
+              <div className="text-[15px] text-[#787878]">{priceString}</div>
             </div>
           </label>
         );

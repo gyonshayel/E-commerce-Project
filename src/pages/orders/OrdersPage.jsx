@@ -31,7 +31,7 @@ export function OrdersPage({ deliveryOptions }) {
           {orders.map((order) => {
             return (
               <div key={order.orderId} className="order-container">
-                <div className="bg-[rgb(240,242,242)] border border-[#D5D9D9] flex items-center justify-between p-[20px_25px] rounded-t-lg max-[575px]:flex-col max-[575px]:items-start max-[575px]:leading-[23px] max-[575px]:p-[15px]">
+                <div className="bg-[#f0f2f2] border border-[#D5D9D9] flex items-center justify-between p-[20px_25px] rounded-t-lg max-[575px]:flex-col max-[575px]:items-start max-[575px]:leading-[23px] max-[575px]:p-[15px]">
                   <div className="flex shrink-0 max-[575px]:flex-col">
                     <div className="mr-[45px] max-[575px]:grid max-[575px]:grid-cols-[auto_1fr]">
                       <div className="font-medium mr-[45px] max-[575px]:mr-[5px]">

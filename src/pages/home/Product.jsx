@@ -31,7 +31,7 @@ export function Product({ product }) {
     <div
       className="flex flex-col 
         pt-10 pb-[25px] px-[25px] 
-        border-r border-b border-[rgb(231,231,231)]"
+        border-r border-b border-[#e7e7e7]"
       data-testid="product-container"
     >
       <Link to={`/product/${product.id}/details`}>
@@ -54,7 +54,7 @@ export function Product({ product }) {
           src={`/images/ratings/rating-${Math.round(product.rating) * 10}.png`}
           alt="rating"
         />
-        <div className="text-[rgb(1,124,182)] cursor-pointer mt-[3px] link-primary">
+        <div className="text-[#017cb6] cursor-pointer mt-[3px] link-primary">
           {product.reviews?.length ?? 0}
         </div>
       </div>
@@ -80,7 +80,7 @@ export function Product({ product }) {
 
       {
         <div
-          className={`flex items-center mb-2 text-[rgb(6,125,98)] text-[16px] ${
+          className={`flex items-center mb-2 text-[#067d62 text-[16px] ${
             isAdded ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -94,8 +94,8 @@ export function Product({ product }) {
       }
 
       <button
-        className="w-full py-1 text-[12px] rounded-[50px] bg-[rgb(255,216,20)] border border-[rgb(252,210,0)]
-                   hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)]
+        className="w-full py-1 text-[12px] rounded-[50px] bg-[#ffd814] border border-[#fcd200]
+                   hover:bg-[#f7ca00] hover:border-[#f2c200]
                    active:shadow-none button-primary"
         data-testid="add-to-cart-button"
         disabled={product.stock <= 0}

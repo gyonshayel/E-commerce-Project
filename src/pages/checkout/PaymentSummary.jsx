@@ -63,7 +63,7 @@ export function PaymentSummary({ paymentSummary }) {
             </div>
           </div>
 
-          <div className="text-[rgb(177,39,4)] font-bold text-[18px] border-t border-[#DEDEDE] pt-[18px]">
+          <div className="text-[#b12704] font-bold text-[18px] border-t border-[#DEDEDE] pt-[18px]">
             <div className="grid grid-cols-[1fr_auto]">
               <div>Order total:</div>
               <div className="text-right">
@@ -73,7 +73,7 @@ export function PaymentSummary({ paymentSummary }) {
           </div>
 
           <button
-            className="w-full py-3 rounded-lg mt-[11px] mb-[15px] bg-[rgb(255,216,20)] border border-[rgb(252,210,0)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[rgb(247,202,0)] active:shadow-none active:bg-[rgb(255,216,20)] button-primary"
+            className="w-full py-3 rounded-lg mt-[11px] mb-[15px] bg-[#ffd814] border border-[#fcd200] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[#f7ca00] active:shadow-none active:bg-[#ffd814] button-primary"
             onClick={createOrder}
             disabled={cart.length === 0}
           >

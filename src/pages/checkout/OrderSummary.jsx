@@ -10,7 +10,7 @@ export function OrderSummary({ deliveryOptions }) {
       <div>
         <p>Your Cart is empty.</p>
         <Link to="/">
-          <button className="py-2 px-2 rounded-lg mt-[11px] mb-[15px] bg-[rgb(255,216,20)] border border-[rgb(252,210,0)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[rgb(247,202,0)] active:shadow-none active:bg-[rgb(255,216,20)] button-primary">
+          <button className="py-2 px-2 rounded-lg mt-[11px] mb-[15px] bg-[#ffd814] border border-[#fcd200] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[#f7ca00] active:shadow-none active:bg-[#ffd814] button-primary">
             View Products
           </button>
         </Link>

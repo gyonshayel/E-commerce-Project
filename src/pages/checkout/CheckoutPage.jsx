@@ -62,7 +62,7 @@ export function CheckoutPage({ deliveryOptions }) {
           <div className="flex-1 flex justify-center text-center text-[22px] font-medium max-[1000px]:text-[20px] max-[1000px]:mr-[60px] max-[575px]:mr-[5px]">
             Checkout (
             <Link
-              className="text-[rgb(0,113,133)] no-underline cursor-pointer max-[1000px]:text-[18px]"
+              className="text-[#007185] no-underline cursor-pointer max-[1000px]:text-[18px]"
               to="/"
               aria-label={`${paymentSummary.totalItems} items in cart`}
             >

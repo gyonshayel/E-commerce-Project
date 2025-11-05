@@ -27,7 +27,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
       key={cartItem.id}
       className="border border-[#DEDEDE] rounded-sm p-[18px] mb-3"
     >
-      <div className="text-[19px] font-bold text-[rgb(0,118,0)] mt-[5px] mb-[22px]">
+      <div className="text-[19px] font-bold text-[#007600] mt-[5px] mb-[22px]">
         Delivery date:{" "}
         {formatDate(addDays(today, selectedDeliveryOption.deliveryDays))}
       </div>
@@ -41,7 +41,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
 
         <div className="cart-item-details">
           <div className="font-bold mb-2">{cartItem.product.title}</div>
-          <div className="text-[rgb(177,39,4)] font-bold mb-[5px]">
+          <div className="text-[#b12704] font-bold mb-[5px]">
             ${cartItem.product.price}
           </div>
           <div className="text-[15px]">
@@ -60,7 +60,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
                     }}
                   />
                   <button
-                    className="text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] ml-[3px] cursor-pointer link-primary"
+                    className="text-[#017cb6] hover:text-[#c45000] ml-[3px] cursor-pointer link-primary"
                     onClick={handleSave}
                   >
                     Save
@@ -70,7 +70,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
                 <span>
                   <span className="quantity-label">{cartItem.quantity}</span>
                   <button
-                    className="text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] ml-[3px] cursor-pointer link-primary"
+                    className="text-[#017cb6] hover:text-[#c45000] ml-[3px] cursor-pointer link-primary"
                     onClick={() => setIsUpdating(true)}
                   >
                     Update
@@ -79,7 +79,7 @@ export function CartItem({ cartItem, deliveryOptions }) {
               )}
             </span>
             <button
-              className="text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] ml-[3px] cursor-pointer link-primary"
+              className="text-[#017cb6] hover:text-[#c45000] ml-[3px] cursor-pointer link-primary"
               onClick={() => removeFromCart(cartItem.id)}
             >
               Delete

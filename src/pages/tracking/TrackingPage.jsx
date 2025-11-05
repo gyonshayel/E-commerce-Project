@@ -58,28 +58,28 @@ export function TrackingPage({ deliveryOptions }) {
           <div className="flex justify-between font-medium text-[20px] mb-[15px] max-[575px]:text-[16px] max-[450px]:flex-col max-[450px]:mb-[5px]">
             <div
               className={`max-[450px]:mb-[3px] ${
-                status === "Preparing" ? "text-[rgb(6,125,98)]" : ""
+                status === "Preparing" ? "text-[#067d62]" : ""
               }`}
             >
               Preparing
             </div>
             <div
               className={`max-[450px]:mb-[3px] ${
-                status === "Shipped" ? "text-[rgb(6,125,98)]" : ""
+                status === "Shipped" ? "text-[#067d62]" : ""
               }`}
             >
               Shipped
             </div>
             <div
               className={`max-[450px]:mb-[3px] ${
-                status === "Delivered" ? "text-[rgb(6,125,98)]" : ""
+                status === "Delivered" ? "text-[#067d62]" : ""
               }`}
             >
               Delivered
             </div>
           </div>
 
-          <div className="h-[25px] w-full border border-[rgb(200,200,200)] rounded-[50px] overflow-hidden">
+          <div className="h-[25px] w-full border border-[#c8c8c8] rounded-[50px] overflow-hidden">
             <div
               className="h-full bg-green-600 rounded-[50px]"
               style={{ width: `${progress}%` }}
